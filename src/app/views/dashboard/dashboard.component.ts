@@ -59,7 +59,9 @@ export class DashboardComponent implements OnInit {
       // filter by date.
       tap( (data: any[]) => {
         // this.min = this.chartValues[this.chartValues.length - 20].time;
-        this.max = data[data.length - 1].Date;
+        if (data.length > 0) {
+          this.max = data[data.length - 1].Date;
+        }
       })
     ).subscribe((data) => {
       this.updater$.next(data);
@@ -99,8 +101,9 @@ export class DashboardComponent implements OnInit {
       } , 0);
           if (sum === 0) {
             console.log('not found ==?' + category);
-            sum = self.findLessAggregate(category);
-            self.aggregateIndex[category] = sum || 0;
+            sum = self.findLessAggregate(category) || 0;
+            self.aggregateIndex[category] = sum;
+            return sum;
           } else {
             self.aggregateIndex[category] = sum / values.length;
           }

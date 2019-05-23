@@ -16,6 +16,6 @@ run `npm run start` to start both ui and backend server. The browser should open
 ## How to load data
 run `node.exe load.js` to enter manually.
 
-run `node.exe load.js < sample-data/t1.json` to load from a file.
+example of how to run `node.exe load.js < sample-data/t1.json` to load from a file.
 
-run `node.exe sample-data/random-input.js | node.exe load.js` to pass script data to load.js .
+example of how to run `node.exe sample-data/random-input.js | node.exe load.js` to pass script data to load.js .

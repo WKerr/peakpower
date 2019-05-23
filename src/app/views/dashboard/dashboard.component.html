@@ -48,7 +48,7 @@
 
           <kendo-chart-series>
             <kendo-chart-series-item *ngFor="let item of uniqueFeature"
-                                     [aggregate]="myAggregate"
+                                     [aggregate]="myAggregate()"
                                      [data]="view | async" type="column"
                                      [name]="item"
                                      [visible]="true"
@@ -57,8 +57,8 @@
             </kendo-chart-series-item>
             <!--[aggregate]="'avg'"-->
 
-
             <kendo-chart-category-axis>
+              <!--[justified]="true"-->
               <kendo-chart-category-axis-item
                 [min]="min"
                 [max]="max"

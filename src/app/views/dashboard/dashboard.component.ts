@@ -59,7 +59,9 @@ export class DashboardComponent implements OnInit {
       // filter by date.
       tap( (data: any[]) => {
         // this.min = this.chartValues[this.chartValues.length - 20].time;
-        this.max = data[data.length - 1].Date;
+        if (data.length > 0) {
+          this.max = data[data.length - 1].Date;
+        }
       })
     ).subscribe((data) => {
       this.updater$.next(data);
@@ -85,23 +87,30 @@ export class DashboardComponent implements OnInit {
       default:
       // code block
     }
-
-    return this.aggregateIndex[(new Date(dTime)).toString()];
+    const nTime = (new Date(dTime)).toString();
+    return this.aggregateIndex[nTime];
   }
 
-  public myAggregate(values: number[], series: any, dataItems: any[], category: string) {
-    /* Return a sum of the values */
-    const sum = values.reduce((total, currentValue = 0) => {
-      return total + currentValue
-    } , 0);
-/*    if (sum === 0) {
-      console.log('not found ==?' + category);
-      this.aggregateIndex[category] = this.findLessAggregate(category);
-    } else {
-      this.aggregateIndex[category] = sum / values.length;
-    }*/
-    return sum / values.length;
+  public myAggregate () {
+    const self = this;
+    return (values: number[], series: any, dataItems: any[], category: string) => {
+      console.log(self);
+      /* Return a sum of the values */
+      let sum = values.reduce((total, currentValue = 0) => {
+        return total + currentValue
+      } , 0);
+          if (sum === 0) {
+            console.log('not found ==?' + category);
+            sum = self.findLessAggregate(category) || 0;
+            self.aggregateIndex[category] = sum;
+            return sum;
+          } else {
+            self.aggregateIndex[category] = sum / values.length;
+          }
+      return sum / values.length;
+    }
   }
+
 
 
 }

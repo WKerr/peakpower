@@ -1,0 +1,77 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      Feature Chart
+      <div class="card-actions">
+<!--        <a href="http://www.chartjs.org">
+          <small class="text-muted">docs</small>
+        </a>-->
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="config-base-unit form-group row">
+        <label for="bu" class="col-md-3 col-form-label">Base Unit</label>
+        <div class="col-md-3">
+          <select class="form-control" id="bu"
+                  [(ngModel)]="baseUnit">
+            <option value="fit">fit</option>
+<!--            <option value="milliseconds">milliseconds</option>-->
+            <option value="seconds">seconds</option>
+            <option value="minutes" selected>minutes</option>
+            <option value="hours">hours</option><!--
+            <option value="days">days</option>
+            <option value="weeks">weeks</option>
+            <option value="months">months</option>
+            <option value="years">years</option>-->
+          </select>
+        </div>
+      </div>
+      <div class="config-base-step form-group row">
+        <label class="col-md-3 col-form-label"
+               for="bus">Base Unit Step</label>
+        <div class="col-md-3">
+          <input class="form-control" id="bus" type="text"
+                 [(ngModel)]="baseUnitStep"/>
+          <!--<span class="help-block">Enter 'auto' or a step size</span>-->
+        </div>
+
+      </div>
+        <kendo-chart renderAs="svg"
+                     [resizeRateLimit]="0"
+                     [transitions]="false">
+
+          <kendo-chart-title text="The Features">
+          </kendo-chart-title>
+
+          <kendo-chart-legend [visible]="true">
+          </kendo-chart-legend>
+
+          <kendo-chart-series>
+            <kendo-chart-series-item *ngFor="let item of uniqueFeature"
+                                     [aggregate]="myAggregate"
+                                     [data]="view | async" type="column"
+                                     [name]="item"
+                                     [visible]="true"
+                                     [field]="item"
+                                     categoryField="Date">
+            </kendo-chart-series-item>
+            <!--[aggregate]="'avg'"-->
+
+
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item
+                [min]="min"
+                [max]="max"
+                [baseUnit]="baseUnit"
+                [baseUnitStep]="baseUnitStep">
+                <kendo-chart-value-axis-item-labels [rotation]="'auto'">
+                </kendo-chart-value-axis-item-labels>
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+
+          </kendo-chart-series>
+        </kendo-chart>
+
+    </div>
+  </div>
+</div>
